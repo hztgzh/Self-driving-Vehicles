@@ -21,7 +21,7 @@ class RRT(object):
         self.constant = constant  #较小常数，当目标点与新生成节点距离小于该值，搜索成功
         self.inpoint = numpy.array([[], [], [], [], []])  #点表
         self.best_path_array = numpy.array([[], []])   #路径回溯
-
+    '''生成随机点'''
     def point_rand(self):
         while True:
             x = random.randint(0, 19)
@@ -30,7 +30,7 @@ class RRT(object):
                 point_r = numpy.array([x, y])
                 break
         return point_r
-
+    '''判断距离'''
     def Dis(self, point1, point2):
         L2 = (point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2
         L = numpy.sqrt(L2)
@@ -50,7 +50,7 @@ class RRT(object):
         else:
             y = -1
         return x, y
-
+    '''生成新节点'''
     def point_new(self):
         point_r = self.point_rand()
         for i in range(self.inpoint.shape[1]):
@@ -68,7 +68,7 @@ class RRT(object):
             point_n = [x, y, min_point[0], min_point[1], n]
             self.inpoint = numpy.c_[self.inpoint, point_n]
             return n
-
+    '''寻找路径'''
     def path_back(self):
         best_path = self.goal
         self.best_path_array = numpy.array([[self.goal[0]], [self.goal[1]]])
@@ -164,7 +164,7 @@ class MAP(object):
         plt.show(ax4)
 
 
-'''输入起始点（5， 4）和终点（14， 14）'''
+'''输入起始点（4， 4）和终点（14， 14），步长为1， 离终点距离最小为0'''
 if __name__ == '__main__':
     a1 = RRT((4, 4), (14, 14), 1, 0)
     a1.main()
